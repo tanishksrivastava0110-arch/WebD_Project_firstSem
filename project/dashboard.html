@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body { font-family: Arial; padding: 30px; }
+        .log-box {
+            background: #fafafa; padding: 20px;
+            border: 1px solid #ccc; width: 60%;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Welcome! Login Activity</h2>
+
+<div class="log-box" id="logs"></div>
+
+<script>
+let logDiv = document.getElementById("logs");
+
+let logs = JSON.parse(localStorage.getItem("login_logs")) || [];
+
+if (logs.length === 0) {
+    logDiv.innerHTML = "<i>No login notifications yet.</i>";
+} else {
+    logDiv.innerHTML = logs.join("<hr>");
+}
+</script>
+
+</body>
+</html>

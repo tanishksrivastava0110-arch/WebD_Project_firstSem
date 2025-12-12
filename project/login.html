@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body { font-family: Arial; background-image : url(https://media.craiyon.com/2025-10-07/WBENOsL5QoSFVihr-BQhQQ.webp); }
+        .box {
+            width: 380px; margin: 100px auto; padding: 25px;
+            background: rgba(190, 195, 198, 0.944); border-radius: 25px; box-shadow: 0 0 20px #ff6969;
+        }
+        input { width: 95%; padding: 10px; margin: 8px 0; color: #0b0202; }
+        button { width: 100%; padding: 10px; background: #207df7; color: rgb(252, 252, 252);  box-shadow: 0 0 0; }
+        button:hover { background: #2c04b3; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>User Login</h2>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+
+    <p>No account? <a href="signup.html">Sign-up</a></p>
+</div>
+
+<script>
+// Request browser notification permission
+Notification.requestPermission();
+
+function notifyLogin(details) {
+    if (Notification.permission === "granted") {
+        new Notification("New Login Detected", {
+            body: details,
+            icon: "https://cdn-icons-png.flaticon.com/512/1827/1827370.png"
+        });
+    }
+}
+
+function login() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let storedEmail = localStorage.getItem("user_email");
+    let storedPassword = localStorage.getItem("user_password");
+    let username = localStorage.getItem("user_name");
+
+    if (email === storedEmail && password === storedPassword) {
+
+        let time = new Date().toLocaleString();
+        let details = `User: ${username}\nEmail: ${email}\nTime: ${time}`;
+
+        notifyLogin(details);
+
+        // Save login log
+        let logs = JSON.parse(localStorage.getItem("login_logs")) || [];
+        logs.push(details);
+        localStorage.setItem("login_logs", JSON.stringify(logs));
+
+        alert("Login Successful!");
+        window.location.href = "experment.html";
+
+    } else {
+        alert("Invalid Credentials!");
+    }
+}
+</script>
+
+</body>
+</html>
